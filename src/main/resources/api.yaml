@@ -1,0 +1,94 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Payment Purpose API Spec",
+    "version": "v1"
+  },
+  "servers": [],
+  "paths": {
+    "/api/fetch/payment-purposes": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "purposeCode": "AUDIT FEES"
+                  },
+                  {
+                    "purposeCode": "CAPITAL PAYMENTS"
+                  }
+                ],
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentPurpose"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/trait_traits.BadRequestError_400"
+          },
+          "500": {
+            "$ref": "#/components/responses/trait_traits.InternalServerError_500"
+          }
+        },
+        "description": "Returns list of payment purposes.",
+        "operationId": "fetch-payment-purposes"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentPurpose": {
+        "type": "array",
+        "items": {
+          "$ref": "schemas/payment-purpose.json"
+        }
+      }
+    },
+    "responses": {
+      "trait_traits.BadRequestError_400": {
+        "description": "BadRequest",
+        "content": {
+          "application/json": {
+            "example": {
+              "message": "Bad Request",
+              "errors": [
+                {
+                  "message": "Value Exceeded. Must be between {min} and {max}.",
+                  "key": "common.api.shoesize",
+                  "context": {
+                    "max": "50",
+                    "min": "1"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "trait_traits.InternalServerError_500": {
+        "description": "InternalServerError",
+        "content": {
+          "application/json": {
+            "example": {
+              "message": "Description of error"
+            },
+            "schema": {
+              "$ref": "lib/types/schemas/internal-server-error.json"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {},
+    "links": {},
+    "callbacks": {}
+  }
+}
